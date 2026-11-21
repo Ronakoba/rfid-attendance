@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Monthly Report ({{ month_value }})</h2>
+  <form class="inline" method="get">
+    <input type="month" name="month" value="{{ month_value }}">
+    <button type="submit">View</button>
+    <a href="{{ url_for('report_xlsx', month=month_value) }}"><button type="button">Download Excel (.xlsx)</button></a>
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th><th>Name</th><th>Dept</th><th>Present</th><th>Half</th><th>Absent</th>
+        <th>Incomplete</th><th>Late</th><th>Early Exit</th><th>Hours</th><th>OT</th><th>Detail</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in summaries %}
+      <tr>
+        <td>{{ s.emp_code }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.department }}</td>
+        <td>{{ s.present }}</td>
+        <td>{{ s.half_day }}</td>
+        <td>{{ s.absent }}</td>
+        <td>{{ s.incomplete }}</td>
+        <td>{{ s.late }}</td>
+        <td>{{ s.early_exit }}</td>
+        <td>{{ s.worked_hours }}</td>
+        <td>{{ s.overtime_hours }}</td>
+        <td><a href="{{ url_for('report_detail', emp_id=s.id, month=month_value) }}">Days</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

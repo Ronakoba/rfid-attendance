@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Today's Attendance ({{ today_str }})</h2>
+  <div class="cards">
+    <div class="card"><div>Total Staff</div><div class="num">{{ total_employees }}</div></div>
+    <div class="card"><div>Checked In / Active</div><div class="num">{{ present_count }}</div></div>
+    <div class="card"><div>Late Arrivals</div><div class="num">{{ late_count }}</div></div>
+    <div class="card"><div>Missing Punch-Out</div><div class="num">{{ incomplete_count }}</div></div>
+  </div>
+  <table>
+    <thead>
+      <tr><th>Code</th><th>Name</th><th>Department</th><th>Status</th><th>First In</th><th>Last Out</th><th>Hours</th><th>Late</th></tr>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td>{{ r.emp_code }}</td>
+        <td>{{ r.name }}</td>
+        <td>{{ r.department }}</td>
+        <td><span class="badge {{ r.status }}">{{ r.status }}</span></td>
+        <td>{{ r.first_in }}</td>
+        <td>{{ r.last_out }}</td>
+        <td>{{ r.worked_hours }}</td>
+        <td>{{ "Yes" if r.late else "No" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Recent Punches Today</h3>
+  <table>
+    <thead><tr><th>Time</th><th>Employee</th><th>Type</th><th>Device</th></tr></thead>
+    <tbody>
+      {% for p in recent_punches %}
+      <tr><td>{{ p.timestamp }}</td><td>{{ p.employee_name }}</td><td>{{ p.punch_type }}</td><td>{{ p.device_id }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Unregistered Card Taps</h3>
+  <table>
+    <thead><tr><th>Time</th><th>Card UID</th><th>Device</th></tr></thead>
+    <tbody>
+      {% for u in unknown_taps %}
+      <tr><td>{{ u.timestamp }}</td><td>{{ u.card_uid }}</td><td>{{ u.device_id }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Anomalies & Review Queue ({{ month_value }})</h2>
+  <form class="inline" method="get">
+    <input type="month" name="month" value="{{ month_value }}">
+    <button type="submit">Filter</button>
+  </form>
+  <table>
+    <thead><tr><th>Date</th><th>Code</th><th>Employee</th><th>Issue</th></tr></thead>
+    <tbody>
+      {% for a in anomalies %}
+      <tr><td>{{ a.date }}</td><td>{{ a.emp_code }}</td><td>{{ a.name }}</td><td>{{ a.issue }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h3>Unknown Card Taps</h3>
+  <table>
+    <thead><tr><th>Timestamp</th><th>Card UID</th><th>Device</th></tr></thead>
+    <tbody>
+      {% for u in unknown_taps %}
+      <tr><td>{{ u.timestamp }}</td><td>{{ u.card_uid }}</td><td>{{ u.device_id }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

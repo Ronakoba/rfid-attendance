@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Import Punch CSV</h2>
+  <p>Expected headers: <code>card_uid,timestamp,device_id</code> (example: <code>DEMO0001,2026-11-21T09:00:00,gate-1</code>)</p>
+  <form class="inline" method="post" enctype="multipart/form-data">
+    <input type="file" name="csv_file" accept=".csv" required>
+    <button type="submit">Upload & Import</button>
+  </form>
+  {% if errors %}
+    <h3>Warnings / Skipped</h3>
+    <ul>{% for err in errors %}<li>{{ err }}</li>{% endfor %}</ul>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Shift & Rule Settings</h2>
+  <form method="post">
+    <table>
+      {% for k, v in settings.items() %}
+      <tr>
+        <th>{{ k }}</th>
+        <td><input type="text" name="{{ k }}" value="{{ v }}"></td>
+      </tr>
+      {% endfor %}
+    </table>
+    <button type="submit">Save Settings</button>
+  </form>
+{% endblock %}
